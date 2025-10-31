@@ -22,8 +22,9 @@ The project uses two agents working in a sequential process (`Process.sequential
 ##  Installation
 ```bash
 # Clone the repository
-git clone https://github.com/AbdulSametTurkmenoglu/otonom_blog_ekibi.git
-cd otonom_blog_ekibi
+git clone https://github.com/AbdulSametTurkmenoglu/autonomous_blog_team_crew_ai.git
+cd autonomous_blog_team_crew_ai
+
 
 # Create virtual environment (recommended)
 python -m venv .venv
