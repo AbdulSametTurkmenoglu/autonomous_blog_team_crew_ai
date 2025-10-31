@@ -1,72 +1,88 @@
-# Otonom Blog Ekibi (CrewAI Projesi)
+# Autonomous Blog Team (CrewAI Project)
 
-Bu proje, `crewai` kütüphanesini kullanarak otonom bir ajan ekibi oluşturur. Ekibin amacı, verilen herhangi bir teknik konu hakkında web'de araştırma yapmak ve bu araştırmaya dayanarak profesyonel bir blog yazısı oluşturmaktır.
+An autonomous agent team built with the `crewai` library that researches any given technical topic on the web and creates a professional blog post based on that research.
 
-##  Ekip ve Süreç
+##  Team & Process
 
-Proje, sıralı (`Process.sequential`) bir süreçte çalışan iki ajandan oluşur:
+The project uses two agents working in a sequential process (`Process.sequential`):
 
-1.  **Teknik Araştırma Uzmanı (Researcher):**
-    * **Araçlar:** `SerperDevTool` (Web Arama), `ScrapeWebsiteTool` (Web Sitesi Okuma), `verify_source` (Özel Kaynak Doğrulayıcı).
-    * **Görevi:** Konuyla ilgili 3-5 güvenilir kaynak bulur, bu kaynakları doğrular, içeriklerini okur ve teknik bir araştırma raporu hazırlar.
+1. **Technical Research Specialist (Researcher)**
+   - **Tools**: `SerperDevTool` (Web Search), `ScrapeWebsiteTool` (Website Scraper), `verify_source` (Custom Source Validator)
+   - **Task**: Finds 3-5 reliable sources, validates them, reads their content, and prepares a technical research report
 
-2.  **Teknik İçerik Yazarı (Writer):**
-    * **Görevi:** Araştırmacının hazırladığı raporu (`context` olarak alır) ve bu bilgileri kullanarak 800-1000 kelimelik, SEO dostu, akıcı bir blog yazısına dönüştürür.
+2. **Technical Content Writer (Writer)**
+   - **Task**: Takes the researcher's report as `context` and transforms it into an 800-1000 word, SEO-friendly, fluent blog post
 
+##  Prerequisites
 
+- Python 3.8+
+- OpenAI API Key
+- Serper API Key (for web search via serper.dev)
 
-##  Kurulum
+##  Installation
+```bash
+# Clone the repository
+git clone https://github.com/AbdulSametTurkmenoglu/otonom_blog_ekibi.git
+cd otonom_blog_ekibi
 
-1.  **Depoyu Klonlama:**
-    ```bash
-    git clone [https://github.com/AbdulSametTurkmenoglu/otonom_blog_ekibi.git](https://github.com/AbdulSametTurkmenoglu/otonom_blog_ekibi.git)
-    cd otonom_blog_ekibi
-    ```
+# Create virtual environment (recommended)
+python -m venv .venv
+source .venv/bin/activate  # Windows: .\.venv\Scripts\activate
 
-2.  **Sanal Ortam (Önerilir):**
-    ```bash
-    python -m venv .venv
-    # Windows: .\.venv\Scripts\activate
-    # macOS/Linux: source .venv/bin/activate
-    ```
+# Install dependencies
+pip install -r requirements.txt
 
-3.  **Gerekli Kütüphaneleri Yükleme:**
-    ```bash
-    pip install -r requirements.txt
-    ```
+# Setup environment variables
+cp .env.example .env  # Windows: copy .env.example .env
+# Edit .env and add your API keys
+```
 
-4.  **.env Dosyasını Oluşturma:**
-    `.env.example` dosyasını kopyalayıp `.env` olarak adlandırın ve içini kendi API anahtarlarınızla doldurun:
-    ```bash
-    # Windows
-    copy .env.example .env
-    
-    # macOS / Linux
-    cp .env.example .env
-    ```
-    `.env` dosyasının içeriği:
-    ```
-    OPENAI_API_KEY="sk-..."
-    SERPER_API_KEY="..." 
-    ```
-    *Not: `SERPER_API_KEY`, web araması için `serper.dev` sitesinden alınmalıdır.*
+**.env file contents:**
+```
+OPENAI_API_KEY="sk-..."
+SERPER_API_KEY="..."
+```
 
-##  Kullanım
+*Note: Get your `SERPER_API_KEY` from serper.dev*
 
-Proje, `run.py` script'i üzerinden çalıştırılır.
+##  Usage
 
-**1. Varsayılan Konu ile Çalıştırma:**
-Script, varsayılan olarak `Direct Preference Optimization (DPO)` konusunu işleyecektir.
+The project runs via the `run.py` script.
 
+**Run with default topic:**
 ```bash
 python run.py
 ```
+The script will process the default topic: `Direct Preference Optimization (DPO)`
 
-**2. Özel Konu ile Çalıştırma:**
-Konunuzu komut satırından argüman olarak girebilirsiniz:
-
+**Run with custom topic:**
 ```bash
-python run.py "LangGraph nedir ve nasıl çalışır?"
+python run.py "What is LangGraph and how does it work?"
 ```
 
-Ekip çalışmaya başladığında terminalde detaylı logları (`verbose=True` sayesinde) göreceksiniz. Süreç tamamlandığında, `blog_ciktisi_...md` adında bir markdown dosyası oluşturulacaktır.
+When the team starts working, you'll see detailed logs in the terminal (enabled by `verbose=True`). Once completed, a markdown file named `blog_ciktisi_...md` will be created.
+
+
+##  How It Works
+
+1. **Research Phase**: 
+   - Researcher agent searches the web for relevant sources
+   - Validates source credibility
+   - Scrapes and analyzes content
+   - Compiles a comprehensive research report
+
+2. **Writing Phase**:
+   - Writer agent receives the research report
+   - Transforms technical information into engaging content
+   - Ensures SEO optimization
+   - Produces a polished 800-1000 word blog post
+
+##  Features
+
+- **Autonomous Research**: Agents independently find and verify sources
+- **Source Validation**: Custom tool ensures information credibility
+- **SEO Optimization**: Generated content is search-engine friendly
+- **Sequential Process**: Clear workflow from research to final output
+- **Detailed Logging**: Verbose mode shows the entire decision-making process
+- **Markdown Output**: Ready-to-publish blog posts in markdown format
+
